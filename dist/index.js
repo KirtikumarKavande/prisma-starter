@@ -11,15 +11,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-function createTodo(userId, title, description) {
+function getTodos(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield prisma.todo.create({
-            data: {
-                userId,
-                title,
-                description
-            }
+        const data = yield prisma.user.findUnique({
+            where: {
+                id: userId,
+            },
+            select: { username: true, todo: true },
         });
+        console.log(data);
     });
 }
-createTodo(1, "go to gym", "go to gym and do 10 pushups");
+getTodos(1);

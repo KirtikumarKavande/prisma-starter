@@ -2,15 +2,15 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function createTodo(userId: number, title: string, description: string) {
-await prisma.todo.create({
-  data:{
-    userId,
-    title,
-    description
-  }
-})
+async function getTodos(userId: number) {
+  const data = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {username:true, todo: true },
+  });
 
+  console.log(data);
 }
 
-createTodo(1, "go to gym", "go to gym and do 10 pushups");
+getTodos(1);
