@@ -2,24 +2,15 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function insertUser(
-  username: string,
-  password: string,
-  firstName: string,
-  lastName: string
-) {
-  let user = await prisma.user.create({
-    data: {
-      username,
-      password,
-      firstName,
-      lastName,
-    },
-    select: {
-      username: true,
-    },
-  });
+async function createTodo(userId: number, title: string, description: string) {
+await prisma.todo.create({
+  data:{
+    userId,
+    title,
+    description
+  }
+})
 
-  console.log(user);
 }
-insertUser("kk2@gmail.com", "123456", "kirtikumar", "kavande");
+
+createTodo(1, "go to gym", "go to gym and do 10 pushups");
